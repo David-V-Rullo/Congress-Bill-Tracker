@@ -446,7 +446,9 @@ th {
 .side-bar {
   background-color:navy;
   color: white;
-  padding: 20px
+  padding-top: 30px;
+  padding-left: 10px;
+
 }
 .side-bar li {
   list-style: none;
@@ -456,4 +458,12 @@ th {
 }
 .bill-card li {
   list-style: none;
+}
+.status-button {
+  width: 100%;
+  font-size: 12px; 
+}
+.active-status {
+  background-color: green;
+  color: white;
 }
