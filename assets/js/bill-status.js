@@ -6,35 +6,38 @@ var topicSearch = ""
 
 $("#month-search").on("click", function(){
   pastMonthSearch = true
-  if (pastWeekSearch = true || currentCongSearch = true){
+  if (pastWeekSearch === true || currentCongSearch === true){
     currentCongSearch = false;
     pastWeekSearch = false;
   }
-  console.log(pastMonthSearch)
-  console.log(pastMonthSearch)
-  console.log(currentCongSearch)
+  console.log("Month search is: " + pastMonthSearch)
+  console.log("Week search is: " + pastWeekSearch)
+  console.log("Congress search is: " + currentCongSearch)
   console.log($(this).attr("id"))
   })
 $("#week-search").on("click", function(){
   pastWeekSearch = true
-  pastMonthSearch = false
-  currentCongSearch = false
-  console.log(pastMonthSearch)
-  console.log(pastMonthSearch)
-  console.log(currentCongSearch)
+  if (pastMonthSearch === true || currentCongSearch === true){
+    currentCongSearch = false;
+    pastMonthSearch = false;
+  }
+  console.log("Month search is: " + pastMonthSearch)
+  console.log("Week search is: " + pastWeekSearch)
+  console.log("Congress search is: " + currentCongSearch)
   console.log($(this).attr("id"))
-
   })
-$("#congress-search").on("click", function(e){
-  pastMonthSearch = false
-  pastWeekSearch = false
+$("#congress-search").on("click", function(){
   currentCongSearch = true
-  console.log(pastMonthSearch)
-  console.log(pastMonthSearch)
-  console.log(currentCongSearch)
+  if (pastMonthSearch === true || pastWeekSearch === true){
+      pastWeekSearch = false;
+      pastMonthSearch = false;
+  }
+  console.log("Month search is: " + pastMonthSearch)
+  console.log("Week search is: " + pastWeekSearch)
+  console.log("Congress search is: " + currentCongSearch)
   console.log($(this).attr("id"))
   })
-console.log(pastMonthSearch)
+
 
 function renderBillStatus() {
   $(".status-button").each(function () {
