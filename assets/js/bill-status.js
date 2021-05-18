@@ -1,6 +1,23 @@
-var topic = $("#topic option:selected").index()
+// var topic = $("#topic option:selected").index()
+var pastWeekSearch = false
+var pastMonthSearch = false
+var currentCongSearch = false
+var topicSearch = ""
 
-console.log(topic)
+$("#month-search").on("click", function(){
+  pastMonthSearch = true
+  console.log(pastMonthSearch)
+  })
+$("#week-search").on("click", function(){
+  pastMonthSearch = true
+  console.log(pastMonthSearch)
+  })
+$("#congress-search").on("click", function(e){
+  pastMonthSearch = true
+  console.log(this.innerHtml)
+  })
+
+
 function renderBillStatus() {
   $(".status-button").each(function () {
     console.log($(this).attr("id"));

@@ -294,6 +294,7 @@ input[type="submit"],
 input[type="select"] {
   -webkit-appearance: button; /* 2 */
   cursor: pointer; /* 3 */
+  background-color: white;
 }
 
 /**
@@ -313,6 +314,7 @@ button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
   padding: 0;
+  background-color: grey;
 }
 
 /**
@@ -468,17 +470,15 @@ th {
   background-color: green;
   color: white;
 }
-.search-button-toggle {
-  width:80%;
-  background-color: white;
-}
+
 .search-submit {
   width:40%;
   background-color: green;
   color:white;
 }
-.search-select-topic {
+.search-select-topic,
+.button {
+  background-color: white;
   color:black;
   width:80%;
-
-}
+  }
