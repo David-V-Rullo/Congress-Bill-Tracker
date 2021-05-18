@@ -1,9 +1,11 @@
-
+var billTextEl= document.getElementById("bill-text")
 
 
 
 var billOutput={};
 var billData;
+
+
 
 
 function test() {
@@ -24,7 +26,9 @@ function test() {
             console.log(Object.keys(locRes))
             console.log(JSON.parse(billOutput))
             billData=(JSON.parse(billOutput))
-            
+            billNewest=billData.results[0].bills[0].bill_id + " " + billData.results[0].bills[0].sponsor_name + " " + billData.results[0].bills[0].short_title;
+            billTextEl.innerText=billNewest
         })
 }
 test();
+
