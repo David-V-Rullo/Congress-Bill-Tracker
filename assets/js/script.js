@@ -59,15 +59,14 @@ function test() {
 }
 
 var current = moment().format("YYYY-MM-DD");
-var oneWeek = moment().add(7, 'days').format('YYYY-MM-DD');
-var oneMonth = moment().add(1, 'months').format('YYYY-MM-DD');
+var oneWeek = moment().subtract(2, 'days').format('YYYY-MM-DD');
+var oneMonth = moment().subtract(1, 'months').format('YYYY-MM-DD');
 
-
-function billsByDate(date) {
+function billsByDate(date = oneWeek) {
     var offset = 0;
-    var good = 3;
+    var good = 5;
     while (good > 0) {
-        
+        console.log(good);
         var url = "https://api.propublica.org/congress/v1/117/both/bills/introduced.json?offset=".concat(offset);
         console.log(url);
         fetch(url, {
@@ -81,13 +80,21 @@ function billsByDate(date) {
             })
             .then(function (response) {
                 console.log(response.results[0].bills);
-                response.results[0].bills.forEach(function (element) {
-                    console.log("Bill id: " + element.bill_id + " Date: " + element.introduced_date);
-                })
+                for(i = 0; i < response.results[0].bills.length; i++){
+                    console.log(date);
+                    if(moment(response.results[0].bills[i].introduced_date).isAfter(date)){
+                        console.log("Bill id: " + response.results[0].bills[i].bill_id + " Date: " + response.results[0].bills[i].introduced_date + " Is after: " + date);
+                    }
+                    else{
+                        console.log("TOO EARLY");
+                        good = 0; 
+                        break;
+                    }
+                }
             })
         offset = offset + 20;
         good--;
     }
 }
 
-billsByDate(0);
+billsByDate();
