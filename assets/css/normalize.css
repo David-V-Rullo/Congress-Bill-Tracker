@@ -290,7 +290,8 @@ select {
 button,
 html input[type="button"], /* 1 */
 input[type="reset"],
-input[type="submit"] {
+input[type="submit"],
+input[type="select"] {
   -webkit-appearance: button; /* 2 */
   cursor: pointer; /* 3 */
 }
@@ -466,4 +467,18 @@ th {
 .active-status {
   background-color: green;
   color: white;
+}
+.search-button-toggle {
+  width:80%;
+  background-color: white;
+}
+.search-submit {
+  width:40%;
+  background-color: green;
+  color:white;
+}
+.search-select-topic {
+  color:black;
+  width:80%;
+
 }
