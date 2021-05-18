@@ -14,9 +14,10 @@ $("#week-search").on("click", function(){
   })
 $("#congress-search").on("click", function(e){
   pastMonthSearch = true
-  console.log(this.innerHtml)
+  $(this).addClass("selected")
+  console.log($(this).attr("id"))
   })
-
+console.log(pastMonthSearch)
 
 function renderBillStatus() {
   $(".status-button").each(function () {
