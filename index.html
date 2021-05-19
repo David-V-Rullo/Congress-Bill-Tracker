@@ -12,8 +12,6 @@
       rel="stylesheet"
       type="text/css"
     />
-    <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="assets/css/normalize.css" />
     <link rel="stylesheet" href="assets/css/skeleton.css" />
   </head>
@@ -72,37 +70,28 @@
         </div>
         <div class="seven columns">
           <div class="bill-card">
-            <h4 id="bill-name">
-              <strong>H.R.1319 - American Rescue Plan Act of 2021</strong>
+            <h4 id="bill-id">
+              
             </h4>
+            <p id="bill-title">Bill Title Text</p>
+
             <ul>
-              <li id="sponsor">
-                Sponsor(s):
-                <a
-                  href="https://www.congress.gov/member/john-yarmuth/Y000062?searchResultViewType=expanded"
-                  >Representative John A. Yarmuth</a
-                >
+              <li>
+                <p>Sponsor(s):&nbsp;<span id="sponsor"></span></p>
               </li>
-              <li id="comimittee">
-                Committees:
-                <a href="https://budget.house.gov/">House - Budget</a>
-              </li>
-              <li id="bill-text">
-                Text:<a
-                  href="https://www.congress.gov/bill/117th-congress/house-bill/1319/text"
-                  >Bill Text</a
-                >
+              <li>
+                <p>Committee:&nbsp;<span id="committee"></span></p>
               </li>
             </ul>
             <div class="bill-status">
-              <button class="status-button" id="introduced">Introduced</button>
-              <button class="status-button" id="pass-house">
+              <button class="status-button inactive-status" id="introduced">Introduced</button>
+              <button class="status-button inactive-status" id="pass-house">
                 Passed House
               </button>
-              <button class="status-button" id="pass-senate">
+              <button class="status-button inactive-status" id="pass-senate">
                 Passed Senate
               </button>
-              <button class="status-button active-status" id="became-law">
+              <button class="status-button inactive-status" id="became-law">
                 Became Law
               </button>
             </div>
@@ -126,7 +115,7 @@
             <div class="three columns modal-right">
               <div id="modal-image">
                 <img src="https://www.congress.gov/img/member/y000062_200.jpg" alt="Selected Rep Photo" />
-                             <label for="modal-image">John A. Yarmuth (D-KY)</label>
+                <label for="modal-image">John A. Yarmuth (D-KY)</label>
               </div>
             </div>
           </div>
