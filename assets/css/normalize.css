@@ -447,7 +447,7 @@ th {
   text-shadow: 1px 1px black
 }
 .side-bar {
-  background-color:navy;
+  background-color:rgba(0, 0, 128, 0.74);
   color: white;
   padding-top: 30px;
   padding-left: 10px;
@@ -491,7 +491,7 @@ th {
     width: 100%;
     margin-bottom: 30px;
     padding: 30px;
-    background-color: navy;
+    background-color:rgba(0, 0, 128, 0.74);
     color: white;
     position: fixed;
   }
