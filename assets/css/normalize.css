@@ -473,7 +473,7 @@ th {
   color: white;
 }
 .inactive-status {
-  background-color: grey;
+  background-color: rgb(182, 180, 180);
 }
 .search-submit {
   width: 40%;

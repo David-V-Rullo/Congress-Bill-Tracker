@@ -7,6 +7,7 @@ var billTitleEl = $("#bill-title")
 var billSponEl = $("#sponsor")
 var billCommEl = $("#committee")
 var billTextEl = $("#bill-text")
+var billLongTitle = $("#bill-long-title")
 // var topicSearch = "";
 
 // Modal Functionality
@@ -184,9 +185,10 @@ function getLatestBill() {
       console.log(billNewest)
     
       billIdEl.text(billNewest.bill_id.toUpperCase())
-      billSponEl.text(`${billNewest.sponsor_title} ${billNewest.sponsor_name}`)
+      billSponEl.text(`${billNewest.sponsor_title} ${billNewest.sponsor_name} (${billNewest.sponsor_party} - ${billNewest.sponsor_state})`)
       billCommEl.text(billNewest.committees)
       billTitleEl.text(billNewest.short_title)
+      billLongTitle.text(billNewest.title)
       renderBillStatus(billNewest)
     });
 }
