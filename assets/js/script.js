@@ -10,7 +10,7 @@ var oneMonth = moment().subtract(1, 'months').format('YYYY-MM-DD');
 var offset = 0;
 
 function billsByDate(date = oneWeek) {
-    dateSearchEl.show();
+    dateSearchResultsEl.show();
 
     var url = "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc&offset=".concat(offset);
     console.log("Offset: " + offset);
@@ -27,30 +27,37 @@ function billsByDate(date = oneWeek) {
             console.log(response.results[0].bills);
             for (i = 0; i < response.results[0].bills.length; i++) {
                 console.log(response.results[0].bills[i].latest_major_action_date);
-                // if(moment(response.results[0].bills[i].introduced_date).isAfter(date)){
-                //     console.log("Bill id: " + response.results[0].bills[i].bill_id + " Date: " + response.results[0].bills[i].introduced_date + " Is after: " + date);
-                // }
-                // else{
-                //     console.log("TOO EARLY");
-                // }
+                if (moment(response.results[0].bills[i].latest_major_action_date).isAfter(date)) {
+                    console.log(
+                        "Bill id: " + response.results[0].bills[i].bill_id +
+                        " Date: " + response.results[0].bills[i].latest_major_action_date +
+                        " Is after: " + date
+                    );
+                    dateSearchResultsEl.append($("<p>").text(
+                        "Bill id: " + response.results[0].bills[i].bill_id +
+                        " Date: " + response.results[0].bills[i].latest_major_action_date)
+                    );
+                }
+                else {
+                    console.log("TOO EARLY");
+                }
             }
         })
-    offset += 20;
 }
 
 dateSearchResultsEl.hide();
-searchBtn.on('click', function(){
+searchBtn.on('click', function () {
     offset = 0;
     billsByDate();
 });
 
-nextBtn.on('click', function(){
+nextBtn.on('click', function () {
     offset += 20;
     billsByDate();
 });
 
-previousBtn.on('click', function(){
-    if(offset >= 20){
+previousBtn.on('click', function () {
+    if (offset >= 20) {
         offset -= 20;
         billsByDate();
     }
