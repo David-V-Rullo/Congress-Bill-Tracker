@@ -68,28 +68,29 @@ $("#congress-search").on("click", function () {
 // Renders the bill status this should be called in all search functions and initial bill on load.
 //  If the status code matches the button ID, light that button. //   All buttons should have default of grey.
 function renderBillStatus(billData) {
-   $(".status-button").each(function () {
+  //  $(".status-button").each(function () {
     if (billData.house_passage === null && billData.senate_passage === null){
-      $(this).addClass("active-status")
-      $(this).removeClass("inactive-status")
+      $("#introduced").addClass("active-status")
+      $("#introduced").removeClass("inactive-status")
       return
     }
-    else if (billData.house_passage !== null && billData.senate_passage === null) {
-      $(this).addClass("active-status")  
-      $(this).removeClass("inactive-status")
+    if (billData.house_passage !== null && billData.senate_passage === null) {
+      $("#pass-house").addClass("active-status")  
+      $("#pass-house").removeClass("inactive-status")
       return
     }
-    else if (billData.senate_passage !== null) {
-      $(this).addClass("active-status")
-      $(this).removeClass("inactive-status")
+    if (billData.senate_passage !== null) {
+      $("#pass-senate").addClass("active-status")
+      $("#pass-senate").removeClass("inactive-status")
+      return
+    }
+    if (billData.active !== false) {
+      $("#became-law").addClass("active-status")
+      $("#became-law").removeClass("inactive-status")
+      return
+    }
+  };
 
-    }
-    else if (billData.active !== false) {
-      $(this).addClass("active-status")
-      $(this).removeClass("inactive-status")
-    }
-  });
-}
 //FUNCTION TO SEARCH BILLS BY DATE
 
 function getBillDate() {
