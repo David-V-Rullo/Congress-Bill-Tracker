@@ -6,7 +6,7 @@ var billOutput={};
 var billData;
 
 
-//Default get latest bill function
+//Default get latest Bill
 
 function getLatestBill() {
     var url = "https://api.propublica.org/congress/v1/bills/search.json";
@@ -61,5 +61,3 @@ getLatestBill();
 
 
 ///DATE RANGE SEARCH
-
-

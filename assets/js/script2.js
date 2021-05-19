@@ -1,3 +1,18 @@
+var billByDateTextEl= document.getElementById("bill-text")
+
+
+
+var dateBillOutput={};
+var dateBillData;
+
+
+
+
+//FUNCTION TO SEARCH BILLS BY DATE
+
+
+
+
 function getBillDate() {
     var url = "https://api.propublica.org/congress/v1/bills/search.json";
     fetch(url, {
@@ -23,7 +38,7 @@ function getBillDate() {
 getBillDate();
 
 
-function getLatestBill() {
+function getBillDate() {
     var url = "https://api.propublica.org/congress/v1/bills/search.json";
     fetch(url, {
         headers: { "X-API-Key": "jHHlm068RlyEusHIX91YA9zmZrvEtDyGplugF6tH" }
@@ -34,15 +49,15 @@ function getLatestBill() {
             }
             return response.json();
         })
-        .then(function (locRes) {
-            console.log(JSON.stringify(locRes))
+        .then(function (dateLocRes) {
+            console.log(JSON.stringify(dateLocRes))
             
-            billOutput=(JSON.stringify(locRes))
-            console.log(Object.keys(locRes))
-            console.log(JSON.parse(billOutput))
-            billData=(JSON.parse(billOutput))
-            billNewest=billData.results[0].bills[0].bill_id + " " + billData.results[0].bills[0].sponsor_name + " " + billData.results[0].bills[0].short_title;
-            billTextEl.innerText=billNewest
+            dateBillOutput=(JSON.stringify(dateLocRes))
+            console.log(Object.keys(dateLocRes))
+            console.log(JSON.parse(dateBillOutput))
+            dateBillData=(JSON.parse(dateBillOutput))
+            billByDate=dateBillData.results[0].bills[0].bill_id + " " + dateBillData.results[0].bills[0].sponsor_name + " " + dateBillData.results[0].bills[0].short_title;
+            billTextEl.innerText=billByDate
         })
 }
 getLatestBill();
