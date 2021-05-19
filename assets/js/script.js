@@ -3,6 +3,8 @@ var dateSearchResultsEl = $("#date-search-results");
 var searchBtn = $('#search-submit');
 var previousBtn = $('#previous');
 var nextBtn = $('#next');
+var pageNumEl = $("#page-number");
+var dateSearchEl = $("#date-search-section");
 
 var current = moment().format("YYYY-MM-DD");
 var oneWeek = moment().subtract(7, 'days').format('YYYY-MM-DD');
@@ -10,7 +12,9 @@ var oneMonth = moment().subtract(1, 'months').format('YYYY-MM-DD');
 var offset = 0;
 
 function billsByDate(date = oneWeek) {
-    dateSearchResultsEl.show();
+    dateSearchResultsEl.empty();
+    dateSearchEl.show();
+    pageNumEl.text((offset/20)+1);
 
     var url = "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc&offset=".concat(offset);
     console.log("Offset: " + offset);
@@ -45,7 +49,7 @@ function billsByDate(date = oneWeek) {
         })
 }
 
-dateSearchResultsEl.hide();
+dateSearchEl.hide();
 searchBtn.on('click', function () {
     offset = 0;
     billsByDate();
