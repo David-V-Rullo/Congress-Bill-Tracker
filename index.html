@@ -1,78 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Congress Tracker</title>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <!-- Basic Page Needs
+    <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8" />
-  <title>Your page title here :)</title>
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-
-  <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="assets/css/normalize.css" />
-  <link rel="stylesheet" href="assets/css/skeleton.css" />
-
-</head>
-
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="one-half column">
-        <img class="congress-image" src="assets/images/us-capitol.jpg" />
-      </div>
-      <div class="one-half column" id="title-card" style="margin-top: 25%">
-        <h4 class="hero-heading">
-          What is Happening in the United States Congress
-        </h4>
-        <br />
-        <p>
-          A current snapshot of the bills floating in the U.S. Congress: what
-          they are about, and who is voting on them. Because knowing is half
-          the battle.
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="four columns side-bar">
-        <div class="search-field">
-          <input type="text" placeholder="Search" />
+    <link rel="stylesheet" href="assets/css/normalize.css" />
+    <link rel="stylesheet" href="assets/css/skeleton.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="one-half column">
+          <img class="congress-image" src="assets/images/us-capitol.jpg" />
         </div>
-        <ul>
-          <li>Today</li>
-          <li>Past Week</li>
-          <li>Past Month</li>
-        </ul>
-      </div>
-      <div class="eight columns">
-        <div class="bill-card">
-          <h4 id="bill-text"><strong>H.R.1319 - American Rescue Plan Act of 2021</strong></h4>
-          <ul>
-            <li id="sponsor">Sponsor(s):
-              <a href="#">Sponsor</a>
-            </li>
-            <li id="comimittee">Committees:
-              <a href="https://budget.house.gov/">House - Budget</a>
-            </li>
-            <li id="bill-text">Text:<a href="https://www.congress.gov/bill/117th-congress/house-bill/1319/text">Bill
-                Text</a></li>
-          </ul>
-
+        <div class="one-half column" id="title-card" style="margin-top: 25%">
+          <h4 class="hero-heading">
+            What is Happening in the United States Congress
+          </h4>
+          <br />
+          <p>
+            A current snapshot of the bills floating in the U.S. Congress: what
+            they are about, and who is voting on them. Because knowing is half
+            the battle.
+          </p>
         </div>
       </div>
+      <div class="row">
+        <div class="four columns side-bar">
+          <div class="search-field">
+            <input type="text" placeholder="Search" />
+            <select class="search-select-topic" id="topic">
+              <!-- <label for="topic">Choose a Bill Topic:</label> -->
+              <option>Select a Topic</option>
+              <option>Public Lands and Natural Resources</option>
+              <option>Science, Technology, Communications</option>
+              <option>Economics and Public Finance</option>
+              <option>Stuff</option>
+              <option>Stuff</option>
+              <option>Stuff</option>
+            </select>
+            <input class="button search-select-button" type="button" value="Past Week" id="week-search">
+            <input class="button search-select-button" type="button" value="Past Month" id="month-search">
+            <input class="button search-select-button" type="button" value="Current Congress" id="congress-search">
+            <button id="search-submit">Search</button>
+          </div>
+          
+        </div>
+        <div class="eight columns">
+          <div class="bill-card">
+            <h4 id="bill-name">
+              <strong>H.R.1319 - American Rescue Plan Act of 2021</strong>
+            </h4>
+            <ul>
+              <li id="sponsor">
+                Sponsor(s):
+                <a
+                  href="https://www.congress.gov/member/john-yarmuth/Y000062?searchResultViewType=expanded"
+                  >Representative John A. Yarmuth</a
+                >
+              </li>
+              <li id="comimittee">
+                Committees:
+                <a href="https://budget.house.gov/">House - Budget</a>
+              </li>
+              <li id="bill-text">
+                Text:<a
+                  href="https://www.congress.gov/bill/117th-congress/house-bill/1319/text"
+                  >Bill Text</a
+                >
+              </li>
+            </ul>
+            <div class="bill-status">
+              <button class="status-button" id="introduced">Introduced</button>
+              <button class="status-button" id="pass-house">
+                Passed House
+              </button>
+              <button class="status-button" id="pass-senate">
+                Passed Senate
+              </button>
+              <button class="status-button" id="to-president">
+                To President
+              </button>
+              <button class="status-button active-status" id="became-law">
+                Became Law
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="date-search-results" class="eight columns">
+          <div>
+            <button id = "previous">&lt;</button>
+            <button id = "next">&gt;</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="assets/js/script.js"></script>
-  <!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-</body>
-
+    <footer></footer>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>
