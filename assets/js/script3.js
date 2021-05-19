@@ -9,10 +9,10 @@ var billKeyData;
 var topics=document.getElementById("topic")
 
 //Get search results
-topics.addEventListener("click", select)
+topics.addEventListener("change", select)
 function select(event) {
 
-    console.log(event.target.textContent)
+    console.log(event)
 }
 
 
@@ -24,7 +24,7 @@ function select(event) {
 //Default get latest Bill
 
 function getKeyBill() {
-    var url = "https://api.propublica.org/congress/v1/bills/search.json?query=asd";
+    var url = "https://api.propublica.org/congress/v1/bills/search.json?query=education";
     fetch(url, {
         headers: { "X-API-Key": "jHHlm068RlyEusHIX91YA9zmZrvEtDyGplugF6tH" }
     })
