@@ -181,6 +181,7 @@ function getLatestBill() {
       // console.log(Object.keys(locRes))
       // console.log(JSON.parse(billOutput))
       billData = JSON.parse(billOutput);
+      console.log(billData)
       billNewest = billData.results[0].bills[0]
       console.log(billNewest)
     
@@ -193,10 +194,10 @@ function getLatestBill() {
     });
 }
 getLatestBill();
+
+
 // When the user clicks on the button, open the modal
-btn.onclick = function () {
-  modal.style.display = "block";
-};
+// btn.onclick = function () 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
   modal.style.display = "none";
@@ -206,4 +207,9 @@ window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }}
+billSponEl.on("click", function(){
+    modal.style.display = "block";
+  });
+
+
 // var billTextEl= document.getElementById("bill-text")
