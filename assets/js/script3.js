@@ -7,6 +7,9 @@ var userSearch;
 var billKeyOutput={};
 var billKeyData;
 var topics=document.getElementById("topic")
+var billKeyId;
+var billKeySponsor;
+var billKeyTitle;
 
 //Get search results
 topics.addEventListener("change", select)
@@ -37,7 +40,14 @@ function getKeyBill(topic) {
             console.log(Object.keys(keyLocRes))
             console.log(JSON.parse(billKeyOutput))
             billKeyData=(JSON.parse(billKeyOutput))
-            billKey=billKeyData.results[0].bills[0].bill_id + " " + billKeyData.results[0].bills[0].sponsor_name + " " + billKeyData.results[0].bills[0].short_title;
-            billKeyTextEl.innerText=billKey
+            //Bill ID
+            billKeyId=billKeyData.results[0].bills[0].bill_id;
+            //BILL SPONSOR
+            billKeySponsor=billKeyData.results[0].bills[0].sponsor_name;
+            //BILL TITLE
+            billKeyTitle=billKeyData.results[0].bills[0].short_title;
+
+            //MUST SAVE billKeyId, billKeySponsor, billKeyTitle to different HTML elements
+            billKeyTextEl.innerText=billKeyId
         })
 }
