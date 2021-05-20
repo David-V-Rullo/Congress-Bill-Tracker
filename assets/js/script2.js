@@ -19,7 +19,9 @@ fetch(wikiEndpointImg + congressPerson + "&origin=*")
     
     console.log(response)
     for (const [key, value] of Object.entries(response.query.pages)) {
-        console.log(`${key}: ${value}`);
+        pageid=(`${key}`);
+        
+        console.log(pageid)
       }
     //console.log(response.query.pages.[326708].original.source)
   });
@@ -36,6 +38,7 @@ fetch(wikiEndpointExtract + congressPerson + "&origin=*")
   .then(function (response) {
     //console.log(response.query.pages[326708].original.source)
     console.log(response)
+    
   });
 
 
