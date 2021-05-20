@@ -16,7 +16,11 @@ var modal = document.getElementById("myModal");
 var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
-
+// Modal variables
+var modalSponName = $("#rep-name");
+var modalSponParty = $("#rep-party");
+var modalSponBio = $("#rep-bio");
+var modalSponCap = $("#spon-image-caption");
 // Clark Code Vars
 var billByDateTextEl = document.getElementById("bill-text");
 var billNewest = {};
@@ -189,9 +193,22 @@ function getLatestBill() {
       billSponEl.text(
         `${billNewest.sponsor_title} ${billNewest.sponsor_name} (${billNewest.sponsor_party} - ${billNewest.sponsor_state})`
       );
+      //Bill Card population
       billCommEl.text(billNewest.committees);
       billTitleEl.text(billNewest.short_title);
       billLongTitle.text(billNewest.title);
+
+      //Modal Population
+      modalSponName.text(
+        `${billNewest.sponsor_title} ${billNewest.sponsor_name} (${billNewest.sponsor_party} - ${billNewest.sponsor_state})`
+      );
+      modalSponParty.text(
+        `${billNewest.sponsor_party} - ${billNewest.sponsor_state}`
+      );
+      modalSponCap.text(
+        `${billNewest.sponsor_title} ${billNewest.sponsor_name}`
+      );
+      //Status Bar Changes
       introducedDateEl.text(`Introduced: ${billNewest.introduced_date}`);
 
       renderBillStatus(billNewest);
@@ -211,12 +228,14 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
-billSponEl.on("click", function () {
+billSponEl.on("click", function (e) {
+  console.log(e);
   modal.style.display = "block";
 });
 
 // var billTextEl= document.getElementById("bill-text")
-var wikiEndpoint = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles="
+var wikiEndpoint =
+  "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=";
 // var parser = "action=query&prop=pageimages&format=json&piprop=";
 var congressPerson = "Chuck_Schumer";
 
@@ -227,5 +246,5 @@ fetch(wikiEndpoint + congressPerson + "&origin=*")
     return response.json();
   })
   .then(function (response) {
-    console.log(response)
-  })
+    console.log(response);
+  });
