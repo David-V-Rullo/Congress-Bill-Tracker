@@ -21,7 +21,8 @@ fetch(wikiEndpointImg + congressPerson + "&origin=*")
     console.log(response)
     for (const [key, value] of Object.entries(response.query.pages)) {
         pageid=(`${key}`);
-        congressImg=response.query.pages[326708].original.source
+        console.log(pageid)
+        congressImg=response.query.pages[pageid].original.source
       }
     //console.log(response.query.pages.[326708].original.source)
   });
@@ -36,8 +37,11 @@ fetch(wikiEndpointExtract + congressPerson + "&origin=*")
     return response.json();
   })
   .then(function (response) {
-    //console.log(response.query.pages[326708].original.source)
-    console.log(response)
+    for (const [key, value] of Object.entries(response.query.pages)) {
+      pageid=(`${key}`);
+      console.log(response.query.pages[pageid].extract)
+      congressExtract=response.query.pages[pageid].extract
+    }
     
   });
 
