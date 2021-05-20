@@ -1,22 +1,42 @@
 // var billTextEl= document.getElementById("bill-text")
-var wikiEndpoint = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles="
+var wikiEndpointImg = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles="
 // var parser = "action=query&prop=pageimages&format=json&piprop=";
+var wikiEndpointExtract= "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles="
+
 var congressPerson = "Chuck_Schumer";
 
 //wikipedia's fetch has to have &origin=* to get past CORS request errors
 
-fetch(wikiEndpoint + congressPerson + "&origin=*")
+
+
+//still working on this
+
+fetch(wikiEndpointImg + congressPerson + "&origin=*")
   .then(function (response) {
     return response.json();
   })
   .then(function (response) {
+    
     console.log(response)
+    for (const [key, value] of Object.entries(response.query.pages)) {
+        console.log(`${key}: ${value}`);
+      }
+    //console.log(response.query.pages.[326708].original.source)
   });
 
 
 
 
+//function to search for page extract wikipedia - still working on it
 
+fetch(wikiEndpointExtract + congressPerson + "&origin=*")
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (response) {
+    //console.log(response.query.pages[326708].original.source)
+    console.log(response)
+  });
 
 
 
