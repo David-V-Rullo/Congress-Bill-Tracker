@@ -12,8 +12,10 @@
   <!-- <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css" /> -->
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet"href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
   <link rel="stylesheet" href="assets/css/normalize.css" />
   <link rel="stylesheet" href="assets/css/skeleton.css" />
+  
 </head>
 
 <body>
@@ -88,9 +90,11 @@
 
           </div>
           <div>
+            <button id="morePrevious">&lt;&lt;</button>
             <button id="previous">&lt;</button>
             <p>Page: <span id="page-number"></span></p>
             <button id="next">&gt;</button>
+            <button id="moreNext">&gt;&gt;</button>
           </div>
         </section>
         <!-- end date results -->
@@ -113,6 +117,7 @@
   </footer>
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
   <script src="assets/js/bill-status.js"></script>
 </body>

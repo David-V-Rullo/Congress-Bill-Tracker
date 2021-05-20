@@ -191,32 +191,48 @@ function getLatestBill() {
 }
 getLatestBill();
 
-//Date search
-console.log("Entering script.js");
-var dateSearchResultsEl = $("#date-search-results");
+/////////////////////////////////////////////////////
+//Start date search
+
+//Button selectors
 var searchBtn = $('.search-submit');
 var previousBtn = $('#previous');
 var nextBtn = $('#next');
-var pageNumEl = $("#page-number");
-var dateSearchEl = $("#date-search-section");
+var moreNextBtn = $('#moreNext');
+var morePreviousBtn = $('#morePrevious');
 var pastWeekBtn = $("#week-search");
 var pastMonthBtn = $("#month-search");
-var currentBtn = $("#congress-search");
 
+//Element selectors
+var dateSearchResultsEl = $("#date-search-results");
+var pageNumEl = $("#page-number");
+var dateSearchEl = $("#date-search-section");
+var currentBtn = $("#congress-search");
+var topicsEl = $("#topic");
+
+//Date variables
 var currentCongress = moment().startOf('year').format("YYYY-MM-DD");
-var oneWeek = moment().subtract(7, 'days').format('YYYY-MM-DD');
-var oneMonth = moment().subtract(1, 'months').format('YYYY-MM-DD');
+var oneWeek = moment().subtract(7, 'days').format("YYYY-MM-DD");
+var oneMonth = moment().subtract(1, 'months').format("YYYY-MM-DD");
+
+//state variables
 var offset = 0;
 var date;
 
-function billsByDate() {
+function billsByDate(date = currentCongress) {
     dateSearchResultsEl.empty();
     dateSearchEl.show();
     pageNumEl.text((offset / 20) + 1);
 
-    var url = "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc&offset=".concat(offset);
-    console.log("Offset: " + offset);
-    console.log(date);
+    var url;
+    if (topicsEl.val() === "Select a Topic") {
+        url = "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc&offset=" + offset;
+    } else {
+        var topic = topicsEl.val();
+        console.log(topic);
+        url = "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc" + "&offset=" + offset+ "&query=" + topic;
+    }
+    console.log(url);
     fetch(url, {
         headers: { "X-API-Key": "jHHlm068RlyEusHIX91YA9zmZrvEtDyGplugF6tH" }
     })
@@ -230,14 +246,7 @@ function billsByDate() {
             var bills = response.results[0].bills;
             console.log(bills);
             for (i = 0; i < bills.length; i++) {
-                //console.log(bills[i].latest_major_action_date);
                 if (moment(bills[i].latest_major_action_date).isAfter(date)) {
-                    // console.log(
-                    //     "Bill id: " + bills[i].bill_id +
-                    //     " Date: " + bills[i].latest_major_action_date +
-                    //     " Is after: " + date
-                    // );
-                    
                     //Creates a card for each result
                     var searchCard = $('<div>').attr('class', 'bill-card');
                     var cardHead = $('<h4>').append($('<strong>').text(bills[i].bill_id + " Date: " + bills[i].latest_major_action_date));
@@ -245,22 +254,40 @@ function billsByDate() {
                     var cardList = $('<ul>');
                     var liOne = $('<li>').text("Sponsor(s): ").append($('<a>').text(bills[i].sponsor_name));
                     var liTwo = $('<li>').text("Comittees: ").append($('<a>').text(bills[i].committees));
-                    var liThree = $('<li>').text("Bill text: ").append($('<a>').text("text"));
+                    var liThree = $('<li>').append($('<p>').text(bills[i].title));
                     cardList.append(liOne, liTwo, liThree);
                     searchCard.append(cardList);
                     var statusBoxes = $('<div>').attr('class', 'bill-status');
-                    var boxOne = $('<button>').attr('class', 'status-button').text("Introduced");
-                    var boxTwo = $('<button>').attr('class', 'status-button').text("Passed House");
-                    var boxThree = $('<button>').attr('class', 'status-button').text("Passed Senate");
-                    var boxFour = $('<button>').attr('class', 'status-button').text("Became Law");
+                    var boxOne = $('<button>').attr('class', 'status-button inactive-status').text("Introduced");
+                    var boxTwo = $('<button>').attr('class', 'status-button inactive-status').text("Passed House");
+                    var boxThree = $('<button>').attr('class', 'status-button inactive-status').text("Passed Senate");
+                    var boxFour = $('<button>').attr('class', 'status-button inactive-status').text("Became Law");
+
+                    if (bills[i].house_passage === null && bills[i].senate_passage === null) {
+                        boxOne.addClass('active-status');
+                        boxOne.removeClass('inactive-status');
+                    }
+                    if (bills[i].house_passage !== null && bills[i].senate_passage === null) {
+                        boxTwo.addClass('active-status');
+                        boxTwo.removeClass('inactive-status');
+                    }
+                    if (bills[i].senate_passage !== null) {
+                        boxThree.addClass('active-status');
+                        boxThree.removeClass('inactive-status');
+                    }
+                    if (bills[i].active !== false) {
+                        boxFour.addClass('active-status');
+                        boxFour.removeClass('inactive-status');
+                    }
+
                     statusBoxes.append(boxOne, boxTwo, boxThree, boxFour);
                     searchCard.append(statusBoxes);
                     dateSearchResultsEl.append(searchCard);
                 }
-                else {
-                    console.log("TOO EARLY");
-                    dateSearchResultsEl.append($("<p>").text("Too early"));
-                }
+                // else {
+                //     console.log("TOO EARLY");
+                //     dateSearchResultsEl.append($("<p>").text("Too early"));
+                // }
             }
         })
 }
@@ -271,32 +298,55 @@ searchBtn.on('click', function () {
     offset = 0;
     if (pastWeekSearch) {
         date = oneWeek;
-        console.log(date);
-        billsByDate();
+        console.log();
+        billsByDate(oneWeek);
     }
     else if (pastMonthSearch) {
         date = oneMonth;
         console.log(date);
-        billsByDate();
+        billsByDate(oneMonth);
     }
     else {
         date = currentCongress;
         console.log(date);
-        billsByDate();
+        billsByDate(currentCongress);
     }
 });
 
+//Buttons to advance through search results
 nextBtn.on('click', function () {
     console.log("Next page");
     offset += 20;
-    billsByDate();
+    billsByDate(date);
 });
 
 previousBtn.on('click', function () {
     console.log("previous page");
     if (offset >= 20) {
         offset -= 20;
-        billsByDate();
+        billsByDate(date);
+    }
+});
+
+moreNextBtn.on('click', function () {
+    console.log("more next page");
+    offset += 200;
+    console.log(date);
+    billsByDate(date);
+});
+
+morePreviousBtn.on('click', function () {
+    console.log("more previous page");
+    if (offset >= 200) {
+        offset -= 200;
+        console.log(date);
+        billsByDate(date);
+    }
+    else {
+        offset = 0;
+        console.log(date);
+        billsByDate(date);
     }
 });
 //End date search
+/////////////////////////////////////////////////////
