@@ -7,9 +7,13 @@
     <meta name="author" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
+    <link
+      href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="assets/css/normalize.css" />
+    <link rel="stylesheet" href="assets/css/skeleton.css" />
   </head>
   <body>
     <div class="container">
@@ -29,62 +33,65 @@
           </p>
         </div>
       </div>
-      <div class="row">
-        <div class="four columns side-bar">
+      <div class="row body-content">
+        <div class="five columns side-bar">
           <div class="search-field">
             <input type="text" placeholder="Search" />
-            <select class="search-select-topic" name="topics" id="topic">
+            <select class="search-select-topic" id="topic">
               <!-- <label for="topic">Choose a Bill Topic:</label> -->
-              <option value="Budget">Budget</option>
-              <option value="Environment">Environment</option>
-              <option value="Education">Education</option>
-              <option value="Science">Science</option>
-              <option value="Defense">Defense</option>
-              <option value="Social Projects">Social Projects</option>
+              <option>Select a Topic</option>
+              <option>Public Lands and Natural Resources</option>
+              <option>Science, Technology, Communications</option>
+              <option>Economics and Public Finance</option>
+              <option>Stuff</option>
+              <option>Stuff</option>
+              <option>Stuff</option>
             </select>
-            <button class="search-button-toggle">Past Week</button>
-            <button class="search-button-toggle">Past Month</button>
-            <button class="search-button-toggle">By Current Congress</button>
+            <input
+              class="button search-select-button"
+              type="button"
+              value="Past Week"
+              id="week-search"
+            />
+            <input
+              class="button search-select-button"
+              type="button"
+              value="Past Month"
+              id="month-search"
+            />
+            <input
+              class="button search-select-button"
+              type="button"
+              value="Current Congress"
+              id="congress-search"
+            />
             <button class="search-submit">Search</button>
           </div>
-          
         </div>
-        <div class="eight columns">
+        <div class="seven columns">
           <div class="bill-card">
-            <h4 id="bill-name">
-              <strong>H.R.1319 - American Rescue Plan Act of 2021</strong>
+            <h4 id="bill-id">
+              
             </h4>
+            <p id="bill-title">Bill Title Text</p>
             <ul>
-              <li id="sponsor">
-                Sponsor(s):
-                <a
-                  href="https://www.congress.gov/member/john-yarmuth/Y000062?searchResultViewType=expanded"
-                  >Representative John A. Yarmuth</a
-                >
+              <li>
+                <p>Sponsor(s):&nbsp;<a id="sponsor"></a></p>
               </li>
-              <li id="comimittee">
-                Committees:
-                <a href="https://budget.house.gov/">House - Budget</a>
-              </li>
-              <li id="bill-text">
-                Text:<a
-                  href="https://www.congress.gov/bill/117th-congress/house-bill/1319/text"
-                  >Bill Text</a
-                >
+              <li>
+                <p>Committee:&nbsp;<span id="committee"></span></p>
               </li>
             </ul>
+            <p id="bill-long-title"></p>
             <div class="bill-status">
-              <button class="status-button" id="introduced">Introduced</button>
-              <button class="status-button" id="pass-house">
+              <button class="status-button inactive-status" id="introduced">Introduced</button>
+              <button class="status-button inactive-status" id="pass-house">
                 Passed House
               </button>
-              <button class="status-button" id="pass-senate">
+              <button class="status-button inactive-status" id="pass-senate">
                 Passed Senate
               </button>
-              <button class="status-button" id="to-president">
-                To President
-              </button>
-              <button class="status-button active-status" id="became-law">
+              <button class="status-button inactive-status" id="became-law">
                 Became Law
               </button>
             </div>
@@ -92,7 +99,43 @@
         </div>
       </div>
     </div>
-    <footer></footer>
+    <button id="myBtn">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content" id="modal-content">
+        <span class="close">&times;</span>
+        <div class="row">
+          <div class="six columns" id="modal-interior">
+            <p>Representative:<span id="rep-name"></span></p>
+            <p>Party: <span id="rep-party"></span></p>
+            <p>Bio:<span id="rep-bio"></span></p>
+          </div>
+            <div class="three columns modal-right">
+              <div id="modal-image">
+                <img src="https://www.congress.gov/img/member/y000062_200.jpg" alt="Selected Rep Photo" />
+                <label for="modal-image">John A. Yarmuth (D-KY)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="container">
+      <div class="row">
+        <div class="eight columns">
+          <p>Copyright &copy; 2021</p>
+        </div>
+        <div class="four columns">
+          <ul>
+            <li>Patrick Braun</li>
+            <li>John Clark</li>
+            <li>David Rullo</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
