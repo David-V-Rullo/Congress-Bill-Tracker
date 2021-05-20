@@ -4,13 +4,14 @@ var wikiEndpointImg = "https://en.wikipedia.org/w/api.php?action=query&prop=page
 var wikiEndpointExtract= "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles="
 
 var congressPerson = "Chuck_Schumer";
+var congressImg;
+var congressExtract;
 
 //wikipedia's fetch has to have &origin=* to get past CORS request errors
 
 
 
-//still working on this
-
+//CongressImg contains the output of this function and works properly at the moment.
 fetch(wikiEndpointImg + congressPerson + "&origin=*")
   .then(function (response) {
     return response.json();
@@ -20,8 +21,7 @@ fetch(wikiEndpointImg + congressPerson + "&origin=*")
     console.log(response)
     for (const [key, value] of Object.entries(response.query.pages)) {
         pageid=(`${key}`);
-        
-        console.log(pageid)
+        congressImg=response.query.pages[326708].original.source
       }
     //console.log(response.query.pages.[326708].original.source)
   });
