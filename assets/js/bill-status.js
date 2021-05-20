@@ -2,13 +2,13 @@
 var pastWeekSearch = false;
 var pastMonthSearch = false;
 var currentCongSearch = false;
-var billIdEl = $("#bill-id")
-var billTitleEl = $("#bill-title")
-var billSponEl = $("#sponsor")
-var billCommEl = $("#committee")
-var billTextEl = $("#bill-text")
-var billLongTitle = $("#bill-long-title")
-// var topicSearch = "";
+var billIdEl = $("#bill-id");
+var billTitleEl = $("#bill-title");
+var billSponEl = $("#sponsor");
+var billCommEl = $("#committee");
+var billTextEl = $("#bill-text");
+var billLongTitle = $("#bill-long-title");
+var introducedDateEl = $("#introduced"); // var topicSearch = "";
 
 // Modal Functionality
 var modal = document.getElementById("myModal");
@@ -19,7 +19,7 @@ var span = document.getElementsByClassName("close")[0];
 
 // Clark Code Vars
 var billByDateTextEl = document.getElementById("bill-text");
-var billNewest = {}
+var billNewest = {};
 var dateBillOutput = {};
 var dateBillData;
 var billKeyTextEl = document.getElementById("bill-text"); //bill data destination
@@ -70,27 +70,27 @@ $("#congress-search").on("click", function () {
 //  If the status code matches the button ID, light that button. //   All buttons should have default of grey.
 function renderBillStatus(billData) {
   //  $(".status-button").each(function () {
-    if (billData.house_passage === null && billData.senate_passage === null){
-      $("#introduced").addClass("active-status")
-      $("#introduced").removeClass("inactive-status")
-      return
-    }
-    if (billData.house_passage !== null && billData.senate_passage === null) {
-      $("#pass-house").addClass("active-status")  
-      $("#pass-house").removeClass("inactive-status")
-      return
-    }
-    if (billData.senate_passage !== null) {
-      $("#pass-senate").addClass("active-status")
-      $("#pass-senate").removeClass("inactive-status")
-      return
-    }
-    if (billData.active !== false) {
-      $("#became-law").addClass("active-status")
-      $("#became-law").removeClass("inactive-status")
-      return
-    }
-  };
+  if (billData.house_passage === null && billData.senate_passage === null) {
+    $("#introduced").addClass("active-status");
+    $("#introduced").removeClass("inactive-status");
+    return;
+  }
+  if (billData.house_passage !== null && billData.senate_passage === null) {
+    $("#pass-house").addClass("active-status");
+    $("#pass-house").removeClass("inactive-status");
+    return;
+  }
+  if (billData.senate_passage !== null) {
+    $("#pass-senate").addClass("active-status");
+    $("#pass-senate").removeClass("inactive-status");
+    return;
+  }
+  if (billData.active !== false) {
+    $("#became-law").addClass("active-status");
+    $("#became-law").removeClass("inactive-status");
+    return;
+  }
+}
 
 //FUNCTION TO SEARCH BILLS BY DATE
 
@@ -181,23 +181,26 @@ function getLatestBill() {
       // console.log(Object.keys(locRes))
       // console.log(JSON.parse(billOutput))
       billData = JSON.parse(billOutput);
-      console.log(billData)
-      billNewest = billData.results[0].bills[0]
-      console.log(billNewest)
-    
-      billIdEl.text(billNewest.bill_id.toUpperCase())
-      billSponEl.text(`${billNewest.sponsor_title} ${billNewest.sponsor_name} (${billNewest.sponsor_party} - ${billNewest.sponsor_state})`)
-      billCommEl.text(billNewest.committees)
-      billTitleEl.text(billNewest.short_title)
-      billLongTitle.text(billNewest.title)
-      renderBillStatus(billNewest)
+      console.log(billData);
+      billNewest = billData.results[0].bills[0];
+      console.log(billNewest);
+
+      billIdEl.text(billNewest.bill_id.toUpperCase());
+      billSponEl.text(
+        `${billNewest.sponsor_title} ${billNewest.sponsor_name} (${billNewest.sponsor_party} - ${billNewest.sponsor_state})`
+      );
+      billCommEl.text(billNewest.committees);
+      billTitleEl.text(billNewest.short_title);
+      billLongTitle.text(billNewest.title);
+      introducedDateEl.text(`Introduced: ${billNewest.introduced_date}`);
+
+      renderBillStatus(billNewest);
     });
 }
 getLatestBill();
 
-
 // When the user clicks on the button, open the modal
-// btn.onclick = function () 
+// btn.onclick = function ()
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
   modal.style.display = "none";
@@ -206,10 +209,23 @@ span.onclick = function () {
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
-  }}
-billSponEl.on("click", function(){
-    modal.style.display = "block";
-  });
-
+  }
+};
+billSponEl.on("click", function () {
+  modal.style.display = "block";
+});
 
 // var billTextEl= document.getElementById("bill-text")
+var wikiEndpoint = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles="
+// var parser = "action=query&prop=pageimages&format=json&piprop=";
+var congressPerson = "Chuck_Schumer";
+
+//wikipedia's fetch has to have &origin=* to get past CORS request errors
+
+fetch(wikiEndpoint + congressPerson + "&origin=*")
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (response) {
+    console.log(response)
+  })
