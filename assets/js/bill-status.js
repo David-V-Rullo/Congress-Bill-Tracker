@@ -230,7 +230,7 @@ function billsByDate(date = currentCongress) {
     } else {
         var topic = topicsEl.val();
         console.log(topic);
-        url = "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc" + "&offset=" + offset+ "&query=" + topic;
+        url = "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc" + "&offset=" + offset+ "&query=" + encodeURIComponent(topic);
     }
     console.log(url);
     fetch(url, {
@@ -284,10 +284,6 @@ function billsByDate(date = currentCongress) {
                     searchCard.append(statusBoxes);
                     dateSearchResultsEl.append(searchCard);
                 }
-                // else {
-                //     console.log("TOO EARLY");
-                //     dateSearchResultsEl.append($("<p>").text("Too early"));
-                // }
             }
         })
 }
