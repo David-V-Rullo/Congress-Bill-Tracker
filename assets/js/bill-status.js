@@ -4,22 +4,17 @@ var pastMonthSearch = false;
 var currentCongSearch = false;
 var billIdEl = $("#bill-id");
 var billTitleEl = $("#bill-title");
-var billSponEl = $("#sponsor")
+var billSponEl = $("#sponsor");
 var billSponNameEl = $("#sponsor-name");
 var billSponTitleEl = $("#sponsor-title");
 var billSponPartyEl = $("#sponsor-party");
 var billCommEl = $("#committee");
 var billTextEl = $("#bill-text");
 var billLongTitle = $("#bill-long-title");
-var introducedDateEl = $("#introduced"); 
-
-// Modal Functionality
-// Get the button that opens the modal
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var introducedDateEl = $("#introduced");
 
 // Modal variables
-var modalSponTitle = $("#rep-title")
+var modalSponTitle = $("#rep-title");
 var modalSponName = $("#rep-name");
 var modalSponParty = $("#rep-party");
 var modalSponBio = $("#rep-bio");
@@ -37,6 +32,31 @@ var billKeyData;
 var topics = document.getElementById("topic");
 var billOutput = {};
 var billData;
+
+//Patrick Code Vars
+var searchBtn = $(".search-submit");
+var previousBtn = $("#previous");
+var nextBtn = $("#next");
+var moreNextBtn = $("#moreNext");
+var morePreviousBtn = $("#morePrevious");
+var pastWeekBtn = $("#week-search");
+var pastMonthBtn = $("#month-search");
+
+//Element selectors
+var dateSearchResultsEl = $("#date-search-results");
+var pageNumEl = $("#page-number");
+var dateSearchEl = $("#date-search-section");
+var currentBtn = $("#congress-search");
+var topicsEl = $("#topic");
+
+//Date variables
+var currentCongress = moment().startOf("year").format("YYYY-MM-DD");
+var oneWeek = moment().subtract(7, "days").format("YYYY-MM-DD");
+var oneMonth = moment().subtract(1, "months").format("YYYY-MM-DD");
+
+//state variables
+var offset = 0;
+var date;
 
 // Working Code for selector buttons on side bar. Only allows user to pick one and populate the boolean for what they want. This boolean is referenced when the search function exectues.
 
@@ -102,8 +122,27 @@ function renderBillStatus(billData) {
 
 //FUNCTION TO SEARCH BILLS BY DATE
 
-function getBillDate() {
-  var url = "https://api.propublica.org/congress/v1/bills/search.json";
+function billsByDate(date = currentCongress) {
+  dateSearchResultsEl.empty();
+  dateSearchEl.show();
+  pageNumEl.text(offset / 20 + 1);
+
+  var url;
+  if (topicsEl.val() === "Select a Topic") {
+    url =
+      "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc&offset=" +
+      offset;
+  } else {
+    var topic = topicsEl.val();
+    console.log(topic);
+    url =
+      "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc" +
+      "&offset=" +
+      offset +
+      "&query=" +
+      encodeURIComponent(topic);
+  }
+  console.log(url);
   fetch(url, {
     headers: { "X-API-Key": "jHHlm068RlyEusHIX91YA9zmZrvEtDyGplugF6tH" },
   })
@@ -113,59 +152,92 @@ function getBillDate() {
       }
       return response.json();
     })
-    .then(function (dateLocRes) {
-      // console.log(JSON.stringify(dateLocRes));
-
-      dateBillOutput = JSON.stringify(dateLocRes);
-      // console.log(Object.keys(dateLocRes));
-      //       console.log(JSON.parse(dateBillOutput));
-      dateBillData = JSON.parse(dateBillOutput);
-      billByDate =
-        dateBillData.results[0].bills[0].bill_id +
-        " " +
-        dateBillData.results[0].bills[0].sponsor_name +
-        " " +
-        dateBillData.results[0].bills[0].short_title;
-      billTextEl.innerText = billByDate;
-    });
-}
-// getBillDate();
-
-//Get search results
-topics.addEventListener("change", select);
-function select(event) {
-  getKeyBill(event.target.value);
-  console.log(event.target.value);
-}
-
-function getKeyBill(topic) {
-  var url =
-    "https://api.propublica.org/congress/v1/bills/search.json?query=" + topic;
-  fetch(url, {
-    headers: { "X-API-Key": "jHHlm068RlyEusHIX91YA9zmZrvEtDyGplugF6tH" },
-  })
     .then(function (response) {
-      if (!response.ok) {
-        throw response.json();
-      }
-      return response.json();
-    })
-    .then(function (keyLocRes) {
-      console.log(JSON.stringify(keyLocRes));
+      var bills = response.results[0].bills;
+      console.log(bills);
+      for (i = 0; i < bills.length; i++) {
+        if (moment(bills[i].latest_major_action_date).isAfter(date)) {
+          //Creates a card for each result
+          var searchCard = $("<div>").attr("class", "bill-card");
+          var cardHead = $("<h4>").append(
+            $("<strong>").text(bills[i].bill_id.toUpperCase())
+          );
+          searchCard.append(cardHead);
+          var cardList = $("<ul>");
+          var liOne = $("<li>")
+            .text("Sponsor: ")
+            .append(
+              $("<span>").attr("id", "sponsor").text(bills[i].sponsor_name)
+            );
+          var liTwo = $("<li>")
+            .text("Comittees: ")
+            .append($("<span>").text(bills[i].committees));
+          var liThree = $("<li>").append($("<p>").text(bills[i].title));
+          cardList.append(liOne, liTwo, liThree);
+          searchCard.append(cardList);
+          var statusBoxes = $("<div>").attr("class", "bill-status");
+          var boxOne = $("<button>")
+            .attr("class", "status-button inactive-status")
+            .text("Introduced");
+          var boxTwo = $("<button>")
+            .attr("class", "status-button inactive-status")
+            .text("Passed House");
+          var boxThree = $("<button>")
+            .attr("class", "status-button inactive-status")
+            .text("Passed Senate");
+          var boxFour = $("<button>")
+            .attr("class", "status-button inactive-status")
+            .text("Became Law");
 
-      billKeyOutput = JSON.stringify(keyLocRes);
-      // console.log(Object.keys(keyLocRes));
-      //       console.log(JSON.parse(billKeyOutput));
-      billKeyData = JSON.parse(billKeyOutput);
-      billKey =
-        billKeyData.results[0].bills[0].bill_id +
-        " " +
-        billKeyData.results[0].bills[0].sponsor_name +
-        " " +
-        billKeyData.results[0].bills[0].short_title;
-      billKeyTextEl.innerText = billKey;
+          if (
+            bills[i].house_passage === null &&
+            bills[i].senate_passage === null
+          ) {
+            boxOne.addClass("active-status");
+            boxOne.removeClass("inactive-status");
+          }
+          if (
+            bills[i].house_passage !== null &&
+            bills[i].senate_passage === null
+          ) {
+            boxTwo.addClass("active-status");
+            boxTwo.removeClass("inactive-status");
+          }
+          if (bills[i].senate_passage !== null) {
+            boxThree.addClass("active-status");
+            boxThree.removeClass("inactive-status");
+          }
+          if (bills[i].enacted !== null) {
+            boxFour.addClass("active-status");
+            boxFour.removeClass("inactive-status");
+          }
+
+          statusBoxes.append(boxOne, boxTwo, boxThree, boxFour);
+          searchCard.append(statusBoxes);
+          dateSearchResultsEl.append(searchCard);
+        }
+      }
     });
 }
+
+// dateSearchEl.hide();
+searchBtn.on("click", function (e) {
+  offset = 0;
+  console.log(e);
+  billsByDate();
+});
+
+nextBtn.on("click", function () {
+  offset += 20;
+  billsByDate();
+});
+
+previousBtn.on("click", function () {
+  if (offset >= 20) {
+    offset -= 20;
+    billsByDate();
+  }
+});
 
 //Default get latest Bill
 
@@ -181,7 +253,6 @@ function getLatestBill() {
       return response.json();
     })
     .then(function (locRes) {
-
       billOutput = JSON.stringify(locRes);
       billData = JSON.parse(billOutput);
       console.log(billData);
@@ -189,9 +260,11 @@ function getLatestBill() {
       console.log(billNewest);
 
       billIdEl.text(billNewest.bill_id.toUpperCase());
-      billSponNameEl.text(billNewest.sponsor_name) 
-      billSponTitleEl.text(billNewest.sponsor_title) 
-      billSponPartyEl.text(` (${billNewest.sponsor_party} - ${billNewest.sponsor_state})`);
+      billSponNameEl.text(billNewest.sponsor_name);
+      billSponTitleEl.text(billNewest.sponsor_title);
+      billSponPartyEl.text(
+        ` (${billNewest.sponsor_party} - ${billNewest.sponsor_state})`
+      );
 
       //Bill Card population
       billCommEl.text(billNewest.committees);
@@ -217,64 +290,43 @@ function getLatestBill() {
 // When the user clicks on the button, open the modal
 // When the user clicks on <span> (x), close the modal
 
-$(".close").on("click", function (e){
-  console.log(e)
+$(".close").on("click", function (e) {
+  console.log(e);
   document.getElementById("myModal").style.display = "none";
-})
+});
 
 //Click event for populating modal with image and summary
 billSponEl.click(function (e) {
-  console.log(e)
-  var modal = document.getElementById("myModal")
+  console.log(e);
+  var modal = document.getElementById("myModal");
   modal.style.display = "block";
-  var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
+  var wikiEndpointExtract =
+    "https://en.wikipedia.org/api/rest_v1/page/summary/";
   var congressExtract;
   var congressPic;
-  var congressPerson = billSponNameEl.text()
-    congressPerson = congressPerson.split(" ")
-    congressPerson = congressPerson.join("_")
-    console.log(congressPerson)
-  
+  var congressPerson = billSponNameEl.text();
+  congressPerson = congressPerson.split(" ");
+  congressPerson = congressPerson.join("_");
+  console.log(congressPerson);
+
   // CongressImg contains the output of this function and works properly at the moment.
-    function getCongressExtract()  {
-      fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
-        .then(function (responseExtract) {
-          return responseExtract.json();
-        })
-        .then(function (responseExtract){
-          console.log("testing")
-          console.log(responseExtract)
-          //returns summary of wiki page
-          congressExtract=responseExtract.extract
-          //gives url link to official photo
-          congressPic=responseExtract.originalimage.source
-          //Gives state/title if they have one (ex. senate majority leader, etc)
-          $("#rep-bio").text(congressExtract)
-          $("#modal-image").attr("src", congressPic)
-        })
-      };
-      getCongressExtract()
-      
-  });
-  getLatestBill();
- 
-// var billTextEl= document.getElementById("bill-text")
-// var wikiEndpoint =
-//   "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=";
-// // var parser = "action=query&prop=pageimages&format=json&piprop=";
-// var congressPerson = "Chuck_Schumer";
-
-// //wikipedia's fetch has to have &origin=* to get past CORS request errors
-
-// fetch(wikiEndpoint + congressPerson + "&origin=*")
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (response) {
-//     console.log(response);
-//   });
-
-  // var billTextEl= document.getElementById("bill-text")
-
-
-
+  function getCongressExtract() {
+    fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
+      .then(function (responseExtract) {
+        return responseExtract.json();
+      })
+      .then(function (responseExtract) {
+        console.log("testing");
+        console.log(responseExtract);
+        //returns summary of wiki page
+        congressExtract = responseExtract.extract;
+        //gives url link to official photo
+        congressPic = responseExtract.originalimage.source;
+        //Gives state/title if they have one (ex. senate majority leader, etc)
+        $("#rep-bio").text(congressExtract);
+        $("#modal-image").attr("src", congressPic);
+      });
+  }
+  getCongressExtract();
+});
+getLatestBill();

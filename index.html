@@ -37,16 +37,13 @@
         <div class="five columns side-bar">
           <div class="search-field">
             <input type="text" placeholder="Search" />
-            <select class="search-select-topic" id="topic">
+              <select class="search-select-topic" id="topic">
               <!-- <label for="topic">Choose a Bill Topic:</label> -->
               <option>Select a Topic</option>
               <option>Public Lands and Natural Resources</option>
               <option>Science, Technology, Communications</option>
               <option>Economics and Public Finance</option>
-              <option>Stuff</option>
-              <option>Stuff</option>
-              <option>Stuff</option>
-            </select>
+             </select>
             <input
               class="button search-select-button"
               type="button"
@@ -65,7 +62,7 @@
               value="Current Congress"
               id="congress-search"
             />
-            <button class="search-submit">Search</button>
+            <button class="search-submit" id="search-submit">Search</button>
           </div>
         </div>
         <div class="seven columns">
@@ -96,6 +93,19 @@
               </button>
             </div>
           </div>
+          <section id="date-search-section">
+            <h1>Search Results</h1>
+            <div id="date-search-results">
+            </div>
+            <div>
+              <button id="morePrevious">&lt;&lt;</button>
+              <button id="previous">&lt;</button>
+              <p>Page: <span id="page-number"></span></p>
+              <button id="next">&gt;</button>
+              <button id="moreNext">&gt;&gt;</button>
+            </div>
+          </section>
+          <!-- end date results -->
         </div>
       </div>
     </div>
@@ -112,7 +122,7 @@
             <div class="three columns modal-right">
               <div id="modal-image-container" >
                 <img id="modal-image" src="" alt="Selected Rep Photo" />
-                <label for="modal-image" id="spon-image-caption">John A. Yarmuth (D-KY)</label>
+                <label for="modal-image" id="spon-image-caption"></label>
               </div>
             </div>
           </div>
