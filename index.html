@@ -37,16 +37,13 @@
         <div class="five columns side-bar">
           <div class="search-field">
             <input type="text" placeholder="Search" />
-            <select class="search-select-topic" id="topic">
+              <select class="search-select-topic" id="topic">
               <!-- <label for="topic">Choose a Bill Topic:</label> -->
               <option>Select a Topic</option>
               <option>Public Lands and Natural Resources</option>
               <option>Science, Technology, Communications</option>
               <option>Economics and Public Finance</option>
-              <option>Stuff</option>
-              <option>Stuff</option>
-              <option>Stuff</option>
-            </select>
+             </select>
             <input
               class="button search-select-button"
               type="button"
@@ -65,7 +62,7 @@
               value="Current Congress"
               id="congress-search"
             />
-            <button class="search-submit">Search</button>
+            <button class="search-submit" id="search-submit">Search</button>
           </div>
         </div>
         <div class="seven columns">
@@ -76,7 +73,7 @@
             <p id="bill-title">Bill Title Text</p>
             <ul>
               <li>
-                <p>Sponsor(s):&nbsp;<a id="sponsor"></a></p>
+                <p id="sponsor">Sponsor:&nbsp;<a id="sponsor-title"></a><a id="sponsor-name"></a><a id="sponsor-party"></a></p>
               </li>
               <li>
                 <p>Committee:&nbsp;<span id="committee"></span></p>
@@ -96,11 +93,22 @@
               </button>
             </div>
           </div>
+          <section id="date-search-section">
+            <h1>Search Results</h1>
+            <div id="date-search-results">
+            </div>
+            <div>
+              <button id="morePrevious">&lt;&lt;</button>
+              <button id="previous">&lt;</button>
+              <p>Page: <span id="page-number"></span></p>
+              <button id="next">&gt;</button>
+              <button id="moreNext">&gt;&gt;</button>
+            </div>
+          </section>
+          <!-- end date results -->
         </div>
       </div>
     </div>
-    <button id="myBtn">Open Modal</button>
-
     <!-- The Modal -->
     <div id="myModal" class="modal">
       <!-- Modal content -->
@@ -108,14 +116,13 @@
         <span class="close">&times;</span>
         <div class="row">
           <div class="six columns" id="modal-interior">
-            <p>Representative:<span id="rep-name"></span></p>
-            <p>Party: <span id="rep-party"></span></p>
-            <p>Bio:<span id="rep-bio"></span></p>
+            <h4><span id=rep-title></span><span id="rep-name"></span><span id="rep-party"></span></h4>
+            <p><span id="rep-bio"></span></p>
           </div>
             <div class="three columns modal-right">
-              <div id="modal-image">
-                <img src="https://www.congress.gov/img/member/y000062_200.jpg" alt="Selected Rep Photo" />
-                <label for="modal-image">John A. Yarmuth (D-KY)</label>
+              <div id="modal-image-container" >
+                <img id="modal-image" src="" alt="Selected Rep Photo" />
+                <label for="modal-image" id="spon-image-caption"></label>
               </div>
             </div>
           </div>
