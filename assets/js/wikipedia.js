@@ -1,37 +1,43 @@
-// var billTextEl= document.getElementById("bill-text")
-var wikiEndpointImg = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles="
-// var parser = "action=query&prop=pageimages&format=json&piprop=";
+//Copy these variables
+
 var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
 
 var congressPerson = "Chuck_Schumer";
-var congressImg;
+
 var congressExtract;
+var congressPic;
+
+//END copy variables
+
 
 //wikipedia's fetch has to have &origin=* to get past CORS request errors
 
 
-
+// //var congressImg;
+//var wikiEndpointImg = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles="
 //CongressImg contains the output of this function and works properly at the moment.
-fetch(wikiEndpointImg + congressPerson + "&origin=*")
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (response) {
+//I think this can get commented/deleted out since the summary page lets me pull the img data too
+// fetch(wikiEndpointImg + congressPerson + "&origin=*")
+//   .then(function (response) {
+//     return response.json();
+//   })
+//   .then(function (response) {
     
-    console.log(response)
-    for (const [key, value] of Object.entries(response.query.pages)) {
-        pageid=(`${key}`);
-        console.log(pageid)
-        congressImg=response.query.pages[pageid].original.source
-      }
+//     console.log(response)
+//     for (const [key, value] of Object.entries(response.query.pages)) {
+//         pageid=(`${key}`);
+//         console.log(pageid)
+//         congressImg=response.query.pages[pageid].original.source
+//       }
     
-  });
+//   });
 
 
 
 
 //function to search for page extract wikipedia - still working on it
-
+//USE THIS FUNCTION + variables on top
+function getCongressExtract()  {
 fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
   .then(function (responseExtract) {
     return responseExtract.json();
@@ -40,12 +46,14 @@ fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
     console.log("testing")
     console.log(responseExtract)
     congressExtract=responseExtract.extract
+    congressPic=responseExtract.originalimage.source
   
 
-  });
+  })
+};
 
 
-
+//END FUNCTION TO COPY
 
 
 

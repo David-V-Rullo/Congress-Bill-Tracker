@@ -37,7 +37,7 @@ function getLatestBill() {
             billTextEl.innerText=billNewestId;
         })
 }
-getLatestBill();
+
 
 
 
