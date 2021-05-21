@@ -75,7 +75,7 @@
             </h4>
             <p id="bill-title">Bill Title Text</p>
             <ul>
-              <li>
+              <li id="sponsor-element">
                 <p>Sponsor(s):&nbsp;<a id="sponsor"></a></p>
               </li>
               <li>
@@ -99,8 +99,6 @@
         </div>
       </div>
     </div>
-    <button id="myBtn">Open Modal</button>
-
     <!-- The Modal -->
     <div id="myModal" class="modal">
       <!-- Modal content -->
@@ -108,7 +106,7 @@
         <span class="close">&times;</span>
         <div class="row">
           <div class="six columns" id="modal-interior">
-            <h4 id="rep-name"></h4>
+            <h4><span id=rep-title></span><span id="rep-name"></span><span id="rep-party"></span></h4>
             <p>Bio:<span id="rep-bio"></span></p>
           </div>
             <div class="three columns modal-right">

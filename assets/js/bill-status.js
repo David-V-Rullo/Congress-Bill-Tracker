@@ -1,14 +1,15 @@
-// var topic = $("#topic option:selected").index()
+//Global Variables
 var pastWeekSearch = false;
 var pastMonthSearch = false;
 var currentCongSearch = false;
 var billIdEl = $("#bill-id");
 var billTitleEl = $("#bill-title");
+var billSponClick = $("#sponsor-element")
 var billSponEl = $("#sponsor");
 var billCommEl = $("#committee");
 var billTextEl = $("#bill-text");
 var billLongTitle = $("#bill-long-title");
-var introducedDateEl = $("#introduced"); // var topicSearch = "";
+var introducedDateEl = $("#introduced"); 
 
 // Modal Functionality
 var modal = document.getElementById("myModal");
@@ -16,11 +17,14 @@ var modal = document.getElementById("myModal");
 var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
-// Modal variables
+
+3// Modal variables
+var modalSponTitle = $("#rep-title")
 var modalSponName = $("#rep-name");
 var modalSponParty = $("#rep-party");
 var modalSponBio = $("#rep-bio");
 var modalSponCap = $("#spon-image-caption");
+
 // Clark Code Vars
 var billByDateTextEl = document.getElementById("bill-text");
 var billNewest = {};
@@ -134,8 +138,6 @@ function select(event) {
   console.log(event.target.value);
 }
 
-//Default get latest Bill
-
 function getKeyBill(topic) {
   var url =
     "https://api.propublica.org/congress/v1/bills/search.json?query=" + topic;
@@ -179,11 +181,8 @@ function getLatestBill() {
       return response.json();
     })
     .then(function (locRes) {
-      // console.log(JSON.stringify(locRes));
 
       billOutput = JSON.stringify(locRes);
-      // console.log(Object.keys(locRes))
-      // console.log(JSON.parse(billOutput))
       billData = JSON.parse(billOutput);
       console.log(billData);
       billNewest = billData.results[0].bills[0];
@@ -223,28 +222,61 @@ span.onclick = function () {
   modal.style.display = "none";
 };
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == modal) {
+window.onclick = function () {
     modal.style.display = "none";
   }
-};
-billSponEl.on("click", function (e) {
-  console.log(e);
-  modal.style.display = "block";
-});
+
+//Click event for populating modal with image and summary
+billSponClick.on("click", function () {
+  var wikiEndpointImg = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles="
+  var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
+  var congressPerson = modalSponName.text()
+  console.log(congressPerson)
+  var congressImg;
+  var congressExtract;
+  //wikipedia's fetch has to have &origin=* to get past CORS request errors
+  //CongressImg contains the output of this function and works properly at the moment.
+  fetch(wikiEndpointImg + congressPerson + "&origin=*")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (response) {
+        console.log(response)
+    for (const [key, value] of Object.entries(response.query.pages)) {
+        pageid=(`${key}`);
+        congressImg=response.query.pages[pageid].original.source
+      }
+   });
+//function to search for page extract wikipedia - still working on it
+  fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
+    .then(function (responseExtract) {
+      return responseExtract.json();
+    })
+    .then(function (responseExtract){
+      console.log("testing \n ----------------")
+      console.log(responseExtract)
+      congressExtract=responseExtract.extract
+    });
+    modal.style.display = "block";
+  });
 
 // var billTextEl= document.getElementById("bill-text")
-var wikiEndpoint =
-  "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=";
-// var parser = "action=query&prop=pageimages&format=json&piprop=";
-var congressPerson = "Chuck_Schumer";
+// var wikiEndpoint =
+//   "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=";
+// // var parser = "action=query&prop=pageimages&format=json&piprop=";
+// var congressPerson = "Chuck_Schumer";
 
-//wikipedia's fetch has to have &origin=* to get past CORS request errors
+// //wikipedia's fetch has to have &origin=* to get past CORS request errors
 
-fetch(wikiEndpoint + congressPerson + "&origin=*")
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (response) {
-    console.log(response);
-  });
+// fetch(wikiEndpoint + congressPerson + "&origin=*")
+//   .then(function (response) {
+//     return response.json();
+//   })
+//   .then(function (response) {
+//     console.log(response);
+//   });
+
+  // var billTextEl= document.getElementById("bill-text")
+
+
+
