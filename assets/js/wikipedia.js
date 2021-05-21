@@ -2,10 +2,11 @@
 
 var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
 
-var congressPerson = "Chuck_Schumer";
+var congressPerson = "Tulsi_Gabbard";
 
 var congressExtract;
 var congressPic;
+congressTitle;
 
 //END copy variables
 
@@ -45,9 +46,12 @@ fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
   .then(function (responseExtract){
     console.log("testing")
     console.log(responseExtract)
+    //returns summary of wiki page
     congressExtract=responseExtract.extract
+    //gives url link to official photo
     congressPic=responseExtract.originalimage.source
-  
+    //Gives state/title if they have one (ex. senate majority leader, etc)
+    congressTitle=responseExtract.description
 
   })
 };
