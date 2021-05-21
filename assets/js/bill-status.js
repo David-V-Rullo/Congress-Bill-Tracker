@@ -252,8 +252,8 @@ function billsByDate(date = currentCongress) {
                     var cardHead = $('<h4>').append($('<strong>').text(bills[i].bill_id + " Date: " + bills[i].latest_major_action_date));
                     searchCard.append(cardHead);
                     var cardList = $('<ul>');
-                    var liOne = $('<li>').text("Sponsor(s): ").append($('<a>').text(bills[i].sponsor_name));
-                    var liTwo = $('<li>').text("Comittees: ").append($('<a>').text(bills[i].committees));
+                    var liOne = $('<li>').text("Sponsor(s): ").append($('<span>').text(bills[i].sponsor_name));
+                    var liTwo = $('<li>').text("Comittees: ").append($('<span>').text(bills[i].committees));
                     var liThree = $('<li>').append($('<p>').text(bills[i].title));
                     cardList.append(liOne, liTwo, liThree);
                     searchCard.append(cardList);
