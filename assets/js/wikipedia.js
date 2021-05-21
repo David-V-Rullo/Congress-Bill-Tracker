@@ -1,7 +1,7 @@
 // var billTextEl= document.getElementById("bill-text")
 var wikiEndpointImg = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles="
 // var parser = "action=query&prop=pageimages&format=json&piprop=";
-var wikiEndpointExtract= "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles="
+var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
 
 var congressPerson = "Chuck_Schumer";
 var congressImg;
@@ -24,7 +24,7 @@ fetch(wikiEndpointImg + congressPerson + "&origin=*")
         console.log(pageid)
         congressImg=response.query.pages[pageid].original.source
       }
-    //console.log(response.query.pages.[326708].original.source)
+    
   });
 
 
@@ -32,17 +32,16 @@ fetch(wikiEndpointImg + congressPerson + "&origin=*")
 
 //function to search for page extract wikipedia - still working on it
 
-fetch(wikiEndpointExtract + congressPerson + "&origin=*")
-  .then(function (response) {
-    return response.json();
+fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
+  .then(function (responseExtract) {
+    return responseExtract.json();
   })
-  .then(function (response) {
-    for (const [key, value] of Object.entries(response.query.pages)) {
-      pageid=(`${key}`);
-      console.log(response.query.pages[pageid].extract)
-      congressExtract=response.query.pages[pageid].extract
-    }
-    
+  .then(function (responseExtract){
+    console.log("testing")
+    console.log(responseExtract)
+    congressExtract=responseExtract.extract
+  
+
   });
 
 
@@ -63,7 +62,8 @@ fetch(wikiEndpointExtract + congressPerson + "&origin=*")
 
 
 
-// //old wiki query
+
+// //old wiki query please ignore
 
 // //this element is going to change because we're not saving this to the same part of the screen
 // var billByDateTextEl= document.getElementById("bill-text")
