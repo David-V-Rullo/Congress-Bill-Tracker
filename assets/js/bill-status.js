@@ -275,7 +275,7 @@ function billsByDate(date = currentCongress) {
                         boxThree.addClass('active-status');
                         boxThree.removeClass('inactive-status');
                     }
-                    if (bills[i].active !== false) {
+                    if (bills[i].enacted !== null) {
                         boxFour.addClass('active-status');
                         boxFour.removeClass('inactive-status');
                     }
