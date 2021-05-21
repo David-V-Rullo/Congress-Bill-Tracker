@@ -4,7 +4,7 @@ var pastMonthSearch = false;
 var currentCongSearch = false;
 var billIdEl = $("#bill-id");
 var billTitleEl = $("#bill-title");
-var billSponClick = $("#sponsor-element")
+var billSponEl = $("#sponsor")
 var billSponNameEl = $("#sponsor-name");
 var billSponTitleEl = $("#sponsor-title");
 var billSponPartyEl = $("#sponsor-party");
@@ -14,7 +14,7 @@ var billLongTitle = $("#bill-long-title");
 var introducedDateEl = $("#introduced"); 
 
 // Modal Functionality
-var modal = $("modal")
+var modal = document.getElementById("myModal");
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
@@ -227,39 +227,39 @@ window.onclick = function () {
   }
 
 //Click event for populating modal with image and summary
-billSponClick.on("click", function (event) {
- 
-  event.preventDefault()
-  var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
-  var congressExtract;
-  var congressPic;
-  var congressTitle;
-  var congressPerson = billSponNameEl.text()
-    congressPerson = congressPerson.split(" ")
-    congressPerson = congressPerson.join("_")
-    console.log(congressPerson)
-  var congressExtract;
+billSponEl.click(function (e) {
+  console.log(e)
+  modal.style.display = "block";
+  // event.preventDefault()
+  // var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
+  // var congressExtract;
+  // var congressPic;
+  // var congressTitle;
+  // var congressPerson = billSponNameEl.text()
+  //   congressPerson = congressPerson.split(" ")
+  //   congressPerson = congressPerson.join("_")
+  //   console.log(congressPerson)
+  // var congressExtract;
   
-  // CongressImg contains the output of this function and works properly at the moment.
+  // // CongressImg contains the output of this function and works properly at the moment.
  
-    function getCongressExtract()  {
-      fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
-        .then(function (responseExtract) {
-          return responseExtract.json();
-        })
-        .then(function (responseExtract){
-          console.log("testing")
-          console.log(responseExtract)
-          //returns summary of wiki page
-          congressExtract=responseExtract.extract
-          //gives url link to official photo
-          congressPic=responseExtract.originalimage.source
-          //Gives state/title if they have one (ex. senate majority leader, etc)
-          congressTitle=responseExtract.description
-        })
-      };
-      getCongressExtract()
-
+  //   function getCongressExtract()  {
+  //     fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
+  //       .then(function (responseExtract) {
+  //         return responseExtract.json();
+  //       })
+  //       .then(function (responseExtract){
+  //         console.log("testing")
+  //         console.log(responseExtract)
+  //         //returns summary of wiki page
+  //         congressExtract=responseExtract.extract
+  //         //gives url link to official photo
+  //         congressPic=responseExtract.originalimage.source
+  //         //Gives state/title if they have one (ex. senate majority leader, etc)
+  //         congressTitle=responseExtract.description
+  //       })
+  //     };
+  //     getCongressExtract()
   });
   getLatestBill();
 // var billTextEl= document.getElementById("bill-text")
