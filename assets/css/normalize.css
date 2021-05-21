@@ -532,7 +532,7 @@ footer {
   box-shadow: 10px 10px 40px black;
   position: relative;
 }
-#modal-image {
+#modal-image-container {
   display: inline-block;
   align-content: space-around;
   position: relative;
@@ -544,9 +544,11 @@ footer {
   padding-top: 20px;
   text-align: center;
 }
-#modal-image img {
+#modal-image {
   border-bottom: 2px solid rgb(151, 52, 52);
   padding-bottom: 10px;
+  height: 200px;
+  width: 150px;
 }
 #modal-interior {
   margin-top: 20px;

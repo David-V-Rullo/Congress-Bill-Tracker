@@ -14,9 +14,7 @@ var billLongTitle = $("#bill-long-title");
 var introducedDateEl = $("#introduced"); 
 
 // Modal Functionality
-var modal = document.getElementById("myModal");
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
@@ -202,10 +200,10 @@ function getLatestBill() {
 
       //Modal Population
       modalSponName.text(
-        `${billNewest.sponsor_title} ${billNewest.sponsor_name} (${billNewest.sponsor_party} - ${billNewest.sponsor_state})`
+        `${billNewest.sponsor_title} ${billNewest.sponsor_name}`
       );
       modalSponParty.text(
-        `${billNewest.sponsor_party} - ${billNewest.sponsor_state}`
+        `(${billNewest.sponsor_party} - ${billNewest.sponsor_state})`
       );
       modalSponCap.text(
         `${billNewest.sponsor_title} ${billNewest.sponsor_name}`
@@ -218,50 +216,48 @@ function getLatestBill() {
 }
 // When the user clicks on the button, open the modal
 // When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-  modal.style.display = "none";
-};
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function () {
-    modal.style.display = "none";
-  }
+
+$(".close").on("click", function (e){
+  console.log(e)
+  document.getElementById("myModal").style.display = "none";
+})
 
 //Click event for populating modal with image and summary
 billSponEl.click(function (e) {
   console.log(e)
+  var modal = document.getElementById("myModal")
   modal.style.display = "block";
-  // event.preventDefault()
-  // var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
-  // var congressExtract;
-  // var congressPic;
-  // var congressTitle;
-  // var congressPerson = billSponNameEl.text()
-  //   congressPerson = congressPerson.split(" ")
-  //   congressPerson = congressPerson.join("_")
-  //   console.log(congressPerson)
-  // var congressExtract;
+  var wikiEndpointExtract= "https://en.wikipedia.org/api/rest_v1/page/summary/"
+  var congressExtract;
+  var congressPic;
+  var congressPerson = billSponNameEl.text()
+    congressPerson = congressPerson.split(" ")
+    congressPerson = congressPerson.join("_")
+    console.log(congressPerson)
   
-  // // CongressImg contains the output of this function and works properly at the moment.
- 
-  //   function getCongressExtract()  {
-  //     fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
-  //       .then(function (responseExtract) {
-  //         return responseExtract.json();
-  //       })
-  //       .then(function (responseExtract){
-  //         console.log("testing")
-  //         console.log(responseExtract)
-  //         //returns summary of wiki page
-  //         congressExtract=responseExtract.extract
-  //         //gives url link to official photo
-  //         congressPic=responseExtract.originalimage.source
-  //         //Gives state/title if they have one (ex. senate majority leader, etc)
-  //         congressTitle=responseExtract.description
-  //       })
-  //     };
-  //     getCongressExtract()
+  // CongressImg contains the output of this function and works properly at the moment.
+    function getCongressExtract()  {
+      fetch(wikiEndpointExtract + congressPerson + "?redirect=true")
+        .then(function (responseExtract) {
+          return responseExtract.json();
+        })
+        .then(function (responseExtract){
+          console.log("testing")
+          console.log(responseExtract)
+          //returns summary of wiki page
+          congressExtract=responseExtract.extract
+          //gives url link to official photo
+          congressPic=responseExtract.originalimage.source
+          //Gives state/title if they have one (ex. senate majority leader, etc)
+          $("#rep-bio").text(congressExtract)
+          $("#modal-image").attr("src", congressPic)
+        })
+      };
+      getCongressExtract()
+      
   });
   getLatestBill();
+ 
 // var billTextEl= document.getElementById("bill-text")
 // var wikiEndpoint =
 //   "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=";
