@@ -41,6 +41,7 @@ var moreNextBtn = $("#moreNext");
 var morePreviousBtn = $("#morePrevious");
 var pastWeekBtn = $("#week-search");
 var pastMonthBtn = $("#month-search");
+var inputTextEl = $("#input-text");
 
 //Element selectors
 var dateSearchResultsEl = $("#date-search-results");
@@ -132,6 +133,15 @@ function billsByDate(date = currentCongress) {
     url =
       "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc&offset=" +
       offset;
+      if(inputTextEl.val()){
+        var topic = inputTextEl.val();
+        url =
+        "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc" +
+        "&offset=" +
+        offset +
+        "&query=" +
+        encodeURIComponent(topic);
+      }
   } else {
     var topic = topicsEl.val();
     console.log(topic);
@@ -141,6 +151,16 @@ function billsByDate(date = currentCongress) {
       offset +
       "&query=" +
       encodeURIComponent(topic);
+
+      if(inputTextEl.val()){
+        var topic = inputTextEl.val();
+        url =
+        "https://api.propublica.org/congress/v1/bills/search.json?sort=date&dir=desc" +
+        "&offset=" +
+        offset +
+        "&query=" +
+        encodeURIComponent(topic);
+      }
   }
   console.log(url);
   fetch(url, {
