@@ -436,8 +436,8 @@ th {
 } */
 .congress-image {
   /* position: relative; */
-  background-size: cover;
-  size: 50%;
+  background-size: fit-content;
+  size: 1200px;
 }
 #title-card {
   background-color: rgba(0, 0, 128, 0.596);
